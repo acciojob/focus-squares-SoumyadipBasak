@@ -1,11 +1,12 @@
 // Ensure the DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-  // Select all squares using the class
   const squares = document.querySelectorAll('.square');
-  
-  // Define color constants (matching CSS variables for consistency)
-  const lavender = '#E6E6FA';
-  const coffee   = '#6F4E37';
+
+  // FIX: Using exact RGB string values to match Cypress assertions.
+  // rgb(230, 230, 250) corresponds to #E6E6FA (Lavender)
+  const lavender = 'rgb(230, 230, 250)';
+  // rgb(111, 78, 55) corresponds to #6F4E37 (Coffee)
+  const coffee   = 'rgb(111, 78, 55)';
 
   // Initialize all squares to lavender (ensures initial state)
   squares.forEach(sq => sq.style.backgroundColor = lavender);
@@ -13,21 +14,19 @@ document.addEventListener('DOMContentLoaded', function() {
   // Attach event listeners to each square
   squares.forEach((sq) => {
     
-    // --- Mouse Enter Logic ---
+    // Mouse Enter: Change others to Coffee
     sq.addEventListener('mouseenter', function() {
-      // When the mouse enters the current square (sq),
-      // iterate over ALL squares...
       squares.forEach(other => {
-        // ...and change the color ONLY if it's NOT the current square.
+        // If it's NOT the square the mouse entered, change its color
         if (other !== sq) {
           other.style.backgroundColor = coffee;
         }
       });
     });
 
-    // --- Mouse Leave Logic ---
+    // Mouse Leave: Reset all to Lavender
     sq.addEventListener('mouseleave', function() {
-      // When the mouse leaves ANY square, reset ALL squares to lavender.
+      // Reset all squares to the base lavender color
       squares.forEach(s => s.style.backgroundColor = lavender);
     });
   });
